@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import MemoryList from '@/components/memories/MemoryList'
 import AddMemoryButton from '@/components/memories/AddMemoryButton'
+import DashboardNav from '../../../components/dashboard/DashboardNav'
 
 export default async function MemoriesPage() {
   const supabase = await createClient()
@@ -20,34 +21,14 @@ export default async function MemoriesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-6">
-            <a href="/dashboard" className="text-2xl font-bold text-gray-900">
-              AI Memory Vault
-            </a>
-            <div className="flex gap-4">
-              <a href="/dashboard" className="text-gray-600 hover:text-gray-900">
-                Dashboard
-              </a>
-              <a href="/dashboard/memories" className="text-blue-600 font-semibold">
-                Memories
-              </a>
-              <a href="/dashboard/projects" className="text-gray-600 hover:text-gray-900">
-                Projects
-              </a>
-            </div>
-          </div>
-          <span className="text-gray-600">{user.email}</span>
-        </div>
-      </nav>
+      <DashboardNav userEmail={user.email || ''} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Memory Vault 🧠</h1>
             <p className="text-gray-600 mt-1">
-              {memories?.length || 0} memories stored
+              {memories?.length || 0} {memories?.length === 1 ? 'memory' : 'memories'} stored
             </p>
           </div>
           <AddMemoryButton />
